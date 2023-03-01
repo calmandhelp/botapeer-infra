@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "terraform_state" {
   bucket = "botapeer-terraform-state"
 }
 
-resource "aws_s3_bucket_versioning" "versioning_example" {
+resource "aws_s3_bucket_versioning" "versioning_state" {
   bucket = aws_s3_bucket.terraform_state.bucket
   versioning_configuration {
     status = "Enabled"
