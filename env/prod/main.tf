@@ -14,3 +14,7 @@ module "vpc" {
   env           = var.environment
   service_name  = var.service_name
 }
+
+module "ec2" {
+  source = "../../modules/ec2"
+}
