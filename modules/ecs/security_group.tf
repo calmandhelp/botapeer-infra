@@ -1,11 +1,11 @@
-resource "aws_security_group" "migrate-instance-sg" {
-  name        = "migrate-instance-sg"
-  description = "migrate-instance-sg"
+resource "aws_security_group" "ecs-instance-sg" {
+  name        = "ecs-instance-sg"
+  description = "ecs-instance-sg"
   vpc_id      = var.vpc_main.id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -14,5 +14,9 @@ resource "aws_security_group" "migrate-instance-sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ecs-instance-sg"
   }
 }
