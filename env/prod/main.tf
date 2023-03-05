@@ -19,6 +19,6 @@ module "ec2" {
   source       = "../../modules/ec2"
   env          = var.environment
   service_name = var.service_name
-  private_1a   = module.vpc.private_1a
+  public_1a   = module.vpc.public_1a
   vpc_main     = module.vpc.vpc
 }
