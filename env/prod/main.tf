@@ -24,8 +24,9 @@ module "ec2" {
   vpc_main     = module.vpc.vpc
 }
 
-# module "ecs" {
-#   source       = "../../modules/ecs"
-#   env          = var.environment
-#   service_name = var.service_name
-# }
+module "ecs" {
+  source       = "../../modules/ecs"
+  env          = var.environment
+  service_name = var.service_name
+  vpc_main     = module.vpc.vpc
+}
