@@ -37,7 +37,7 @@ resource "aws_apprunner_service" "apprunner_service" {
       repository_url = "https://github.com/calmandhelp/botapeer-front"
       source_code_version {
         type  = "BRANCH"
-        value = "main"
+        value = var.branch
       }
     }
   }

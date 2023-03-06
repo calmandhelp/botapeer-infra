@@ -54,4 +54,5 @@ module "apprunner" {
   source       = "../../modules/apprunner"
   env          = var.environment
   service_name = var.service_name
+  branch = "main"
 }
