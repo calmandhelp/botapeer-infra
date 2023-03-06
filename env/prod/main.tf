@@ -55,4 +55,5 @@ module "apprunner" {
   env          = var.environment
   service_name = var.service_name
   branch = "main"
+  domain_name = "botapeer.com"
 }

@@ -46,3 +46,8 @@ resource "aws_apprunner_service" "apprunner_service" {
     Name = "${var.service_name}-apprunner-service-${var.env}"
   }
 }
+
+resource "aws_apprunner_custom_domain_association" "apprunner_domain_association" {
+  domain_name = var.domain_name
+  service_arn = aws_apprunner_service.apprunner_service.arn
+}
