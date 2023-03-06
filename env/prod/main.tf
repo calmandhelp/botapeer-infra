@@ -49,3 +49,9 @@ module "ecr" {
   env          = var.environment
   service_name = var.service_name
 }
+
+module "apprunner" {
+  source       = "../../modules/apprunner"
+  env          = var.environment
+  service_name = var.service_name
+}
