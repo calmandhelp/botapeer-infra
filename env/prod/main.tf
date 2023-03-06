@@ -28,7 +28,6 @@ module "ecs" {
   source       = "../../modules/ecs"
   env          = var.environment
   service_name = var.service_name
-  vpc_main     = module.vpc.vpc
 }
 
 module "route53" {
@@ -57,3 +56,11 @@ module "apprunner" {
   branch = "main"
   domain_name = "botapeer.com"
 }
+
+module "alb" {
+  source       = "../../modules/alb"
+  env          = var.environment
+  service_name = var.service_name
+  vpc_main     = module.vpc.vpc
+}
+
