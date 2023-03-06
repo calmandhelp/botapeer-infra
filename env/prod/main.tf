@@ -35,6 +35,7 @@ module "route53" {
   source       = "../../modules/route53"
   env          = var.environment
   service_name = var.service_name
+  cert = module.acm.cert
 }
 
 module "acm" {
