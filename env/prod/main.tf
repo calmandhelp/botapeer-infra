@@ -43,3 +43,9 @@ module "acm" {
   env          = var.environment
   service_name = var.service_name
 }
+
+module "ecr" {
+  source       = "../../modules/ecr"
+  env          = var.environment
+  service_name = var.service_name
+}
