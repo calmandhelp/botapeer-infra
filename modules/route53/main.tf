@@ -57,3 +57,15 @@ resource "aws_route53_record" "ns_record_for_subdomain_image" {
   ttl  = 300
   type = "NS"
 }
+
+resource "aws_route53_record" "alb_record" {
+  name    = aws_route53_zone.subdomain_api.name
+  zone_id = data.aws_route53_zone.service_zone.id
+  type    = "A"
+ 
+  alias {
+    name                   = var.alb.dns_name
+    zone_id                = var.alb.zone_id
+    evaluate_target_health = true
+  }
+}

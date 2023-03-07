@@ -37,6 +37,7 @@ module "route53" {
   env          = var.environment
   service_name = var.service_name
   cert = module.acm.cert
+  alb = module.alb.alb
 }
 
 module "acm" {
@@ -66,5 +67,6 @@ module "alb" {
   vpc_main     = module.vpc.vpc
   public_1a = module.vpc.public_1a
   public_1c = module.vpc.public_1c
+  cert = module.acm.cert
 }
 
