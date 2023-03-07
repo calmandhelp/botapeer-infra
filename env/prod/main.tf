@@ -10,7 +10,7 @@ module "vpc" {
   cidr_public1a  = "10.0.1.0/24"
   cidr_public1c = "10.0.2.0/24"
   cidr_private1a = "10.0.11.0/24"
-  cidr_private1c = "10.0.21.0/24"
+  cidr_private1c = "10.0.12.0/24"
   az1           = "ap-northeast-1a"
   az2           = "ap-northeast-1c"
   env           = var.environment
