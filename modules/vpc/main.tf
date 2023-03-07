@@ -14,6 +14,15 @@ resource "aws_subnet" "public_1a" {
   }
 }
 
+resource "aws_subnet" "public_1c" {
+  vpc_id            = aws_vpc.vpc.id
+  availability_zone = var.az2
+  cidr_block        = var.cidr_public1c
+  tags = {
+    Name = "${var.service_name}-public-1c"
+  }
+}
+
 resource "aws_subnet" "private_1a" {
   vpc_id            = aws_vpc.vpc.id
   availability_zone = var.az1

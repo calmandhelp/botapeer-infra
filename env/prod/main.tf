@@ -8,6 +8,7 @@ module "vpc" {
   source        = "../../modules/vpc"
   cidr_vpc      = "10.0.0.0/16"
   cidr_public1a  = "10.0.1.0/24"
+  cidr_public1c = "10.0.2.0/24"
   cidr_private1a = "10.0.11.0/24"
   cidr_private1c = "10.0.21.0/24"
   az1           = "ap-northeast-1a"
@@ -28,6 +29,7 @@ module "ecs" {
   source       = "../../modules/ecs"
   env          = var.environment
   service_name = var.service_name
+  vpc_main     = module.vpc.vpc
 }
 
 module "route53" {
@@ -62,5 +64,7 @@ module "alb" {
   env          = var.environment
   service_name = var.service_name
   vpc_main     = module.vpc.vpc
+  public_1a = module.vpc.public_1a
+  public_1c = module.vpc.public_1c
 }
 
