@@ -19,7 +19,6 @@ resource "aws_iam_role" "execution_role" {
   assume_role_policy = data.aws_iam_policy_document.ecs_task_doc.json
 }
 
-
 data "aws_iam_policy_document" "ecs_exec_doc" {
   version = "2012-10-17"
   statement {

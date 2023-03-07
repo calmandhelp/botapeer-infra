@@ -34,8 +34,11 @@ module "ecs" {
   env          = var.environment
   service_name = var.service_name
   vpc_main     = module.vpc.vpc
-  ecr = module.ecr.ecr
   alb_group = module.alb.alb_group
+  ecr = module.ecr.ecr
+  execution_role = module.iam.execution_role
+  private_1a = module.vpc.private_1a
+  private_1c = module.vpc.private_1c
 }
 
 module "route53" {
@@ -75,4 +78,3 @@ module "alb" {
   public_1c = module.vpc.public_1c
   cert = module.acm.cert
 }
-
