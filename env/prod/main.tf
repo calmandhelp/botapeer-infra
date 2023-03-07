@@ -17,6 +17,10 @@ module "vpc" {
   service_name  = var.service_name
 }
 
+module "iam" {
+  source       = "../../modules/iam"
+}
+
 module "ec2" {
   source       = "../../modules/ec2"
   env          = var.environment
@@ -30,6 +34,8 @@ module "ecs" {
   env          = var.environment
   service_name = var.service_name
   vpc_main     = module.vpc.vpc
+  ecr = module.ecr.ecr
+  alb_group = module.alb.alb_group
 }
 
 module "route53" {
