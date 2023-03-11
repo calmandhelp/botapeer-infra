@@ -39,6 +39,8 @@ module "ecs" {
   execution_role = module.iam.execution_role
   private_1a = module.vpc.private_1a
   private_1c = module.vpc.private_1c
+  ecs_task_group = module.cloudwatch.ecs_task_group
+  repository_version = "v2"
 }
 
 module "route53" {
@@ -77,4 +79,10 @@ module "alb" {
   public_1a = module.vpc.public_1a
   public_1c = module.vpc.public_1c
   cert = module.acm.cert
+}
+
+module "cloudwatch" {
+  source       = "../../modules/cloudwatch"
+  env          = var.environment
+  service_name = var.service_name
 }

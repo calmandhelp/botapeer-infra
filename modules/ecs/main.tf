@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "api_task" {
   container_definitions = jsonencode([
     {
       name      = "${var.service_name}-core"
-      image     = "${var.ecr.repository_url}:v1"
+      image     = "${var.ecr.repository_url}:${var.repository_version}"
       cpu       = 256
       memory    = 512
       essential = true
@@ -39,6 +39,14 @@ resource "aws_ecs_task_definition" "api_task" {
           hostPort      = 8080
         }
       ]
+      logConfiguration = {
+        LogDriver = "awslogs"
+        options = {
+          "awslogs-region" = "ap-northeast-1"
+          "awslogs-group" = "${var.ecs_task_group.name}"
+          "awslogs-stream-prefix" = "streaming"
+        }
+    }
       # secrets = [
       #   {
       #     "name" : "TOKEN_FROM_SECRET_MANAGER",
@@ -59,9 +67,10 @@ resource "aws_ecs_service" "api_service" {
   task_definition = aws_ecs_task_definition.api_task.arn
   desired_count   = 1
 
-  network_configuration{
+  network_configuration {
     subnets = [var.private_1a.id, var.private_1c.id]
     security_groups = [ aws_security_group.ecs_instance_sg.id ]
+    assign_public_ip = true
   }
 
   load_balancer {
