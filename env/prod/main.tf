@@ -19,6 +19,7 @@ module "vpc" {
 
 module "iam" {
   source       = "../../modules/iam"
+  account_id = var.account_id
 }
 
 module "ec2" {
@@ -41,6 +42,7 @@ module "ecs" {
   private_1c = module.vpc.private_1c
   ecs_task_group = module.cloudwatch.ecs_task_group
   repository_version = "v2"
+  account_id = var.account_id
 }
 
 module "route53" {
@@ -85,4 +87,35 @@ module "cloudwatch" {
   source       = "../../modules/cloudwatch"
   env          = var.environment
   service_name = var.service_name
+}
+
+module "ssm" {
+  source       = "../../modules/ssm"
+  env          = var.environment
+  service_name = var.service_name
+  s3_access_key = var.s3_access_key
+  s3_secret_key = var.s3_secret_key
+  db_url = module.rds.rds.endpoint
+  db_schema = var.db_schema
+  datasource_url = var.datasource_url
+  db_username = var.db_username
+  db_password = var.db_password
+  db_driver_classname = var.db_driver_classname
+  region = var.region
+  image_path = var.image_path
+  jwt_secret = var.jwt_secret
+  jwt_expiration = var.jwt_expiration
+}
+
+module "rds" {
+  source = "../../modules/rds"
+  env          = var.environment
+  vpc_main     = module.vpc.vpc
+  service_name = var.service_name
+  public_1a = module.vpc.public_1a
+  private_1a = module.vpc.private_1a
+  private_1c = module.vpc.private_1c
+  db_username = var.db_username
+  db_password = var.db_password
+  migrate_sg = module.ec2.migrate_instance
 }

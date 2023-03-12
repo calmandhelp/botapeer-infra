@@ -1,0 +1,9 @@
+variable "env" {}
+variable "service_name" {}
+variable "vpc_main" {}
+variable "public_1a" {}
+variable "private_1a" {}
+variable "private_1c" {}
+variable "db_password" {}
+variable "db_username" {}
+variable "migrate_sg" {}

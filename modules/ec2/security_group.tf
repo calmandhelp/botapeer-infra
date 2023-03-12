@@ -1,4 +1,4 @@
-resource "aws_security_group" "migrate-instance-sg" {
+resource "aws_security_group" "migrate_instance_sg" {
   name        = "migrate-instance-sg"
   description = "migrate-instance-sg"
   vpc_id      = var.vpc_main.id

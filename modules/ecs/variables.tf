@@ -8,3 +8,4 @@ variable "private_1a" {}
 variable "private_1c" {}
 variable "ecs_task_group" {}
 variable "repository_version" {}
+variable "account_id" {}

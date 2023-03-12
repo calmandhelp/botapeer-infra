@@ -46,17 +46,17 @@ resource "aws_ecs_task_definition" "api_task" {
           "awslogs-group" = "${var.ecs_task_group.name}"
           "awslogs-stream-prefix" = "streaming"
         }
-    }
-      # secrets = [
-      #   {
-      #     "name" : "TOKEN_FROM_SECRET_MANAGER",
-      #     "valueFrom" : "arn:aws:secretsmanager:ap-northeast-1:123456789012:secret:token-json:json_key::"
-      #   },
-      #   {
-      #     "name" : "TOKEN_FROM_PARAMERTER_STORE",
-      #     "valueFrom" : "arn:aws:ssm:ap-northeast-1:123456789012:parameter/foo_token"
-      #   }
-      # ]
+      }
+      secrets = [
+        {
+          name = "S3_ACCESS_KEY",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/s3/access_key"
+        },
+        {
+          name = "S3_SECRET_KEY",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/s3/secret_key"
+        }
+      ]
     }
   ])
 }
