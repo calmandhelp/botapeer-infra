@@ -7,3 +7,4 @@ variable "private_1c" {}
 variable "db_password" {}
 variable "db_username" {}
 variable "migrate_sg" {}
+variable "ecs_instance_sg" {}

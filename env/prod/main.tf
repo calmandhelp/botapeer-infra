@@ -118,4 +118,5 @@ module "rds" {
   db_username = var.db_username
   db_password = var.db_password
   migrate_sg = module.ec2.migrate_instance
+  ecs_instance_sg = module.ecs.ecs_instance_sg
 }

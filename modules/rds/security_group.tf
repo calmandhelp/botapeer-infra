@@ -7,8 +7,10 @@ resource "aws_security_group" "db_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = [var.public_1a.cidr_block]
-    security_groups = [var.migrate_sg.id]
+    security_groups = [
+      var.migrate_sg.id,
+      var.ecs_instance_sg.id
+      ]
   }
   egress {
     from_port   = 0

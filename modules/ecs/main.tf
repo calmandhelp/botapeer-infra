@@ -55,6 +55,46 @@ resource "aws_ecs_task_definition" "api_task" {
         {
           name = "S3_SECRET_KEY",
           valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/s3/secret_key"
+        },
+        {
+          name = "AWS_REGION_STATIC",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/aws/region"
+        },
+        {
+          name = "SPRING_DATASOURCE_URL",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/datasource_url"
+        },
+        {
+          name = "DB_DRIVER_CLASS_NAME",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/db_driver_classname"
+        },
+        {
+          name = "DB_PASSWORD",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/db_password"
+        },
+        {
+          name = "DB_SCHEMA",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/db_schema"
+        },
+        {
+          name = "DB_URL",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/db_url"
+        },
+        {
+          name = "DB_USERNAME",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/rds/db_username"
+        },
+        {
+          name = "IMAGE_PATH",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/s3/image_path"
+        },
+        {
+          name = "JWT_EXPIRATION_IN_MS",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/spring/jwt_expiration"
+        },
+        {
+          name = "JWT_SECRET",
+          valueFrom = "arn:aws:ssm:ap-northeast-1:${var.account_id}:parameter/${var.env}/spring/jwt_secret"
         }
       ]
     }
