@@ -1,2 +1,0 @@
-[ec2_instances]
-"ec2-52-196-112-80.ap-northeast-1.compute.amazonaws.com" ansible_ssh_private_key_file=../.key_pair/botapeer-prod-server.id_rsa
