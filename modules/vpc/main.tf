@@ -42,45 +42,45 @@ resource "aws_subnet" "private_1c" {
   }
 }
 
+# resource "aws_vpc_endpoint" "secretsmanager" {
+#   vpc_id       = aws_vpc.vpc.id
+#   service_name = "com.amazonaws.ap-northeast-1.secretsmanager"
+#   vpc_endpoint_type = "Interface"
+#   private_dns_enabled = true
+#   subnet_ids = [
+#     aws_subnet.private_1a.id,
+#     aws_subnet.private_1c.id
+#    ]
+#   security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
+# }
+
+# resource "aws_vpc_endpoint" "ssmmessages" {
+#   vpc_id       = aws_vpc.vpc.id
+#   service_name = "com.amazonaws.ap-northeast-1.ssmmessages"
+#   vpc_endpoint_type = "Interface"
+#   private_dns_enabled = true
+#   subnet_ids = [
+#     aws_subnet.private_1a.id,
+#     aws_subnet.private_1c.id
+#    ]
+#   security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
+# }
+
+# resource "aws_vpc_endpoint" "ssm" {
+#   vpc_id       = aws_vpc.vpc.id
+#   service_name = "com.amazonaws.ap-northeast-1.ssm"
+#   vpc_endpoint_type = "Interface"
+#   private_dns_enabled = true
+#   subnet_ids = [
+#     aws_subnet.private_1a.id,
+#     aws_subnet.private_1c.id
+#    ]
+#   security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
+# }
+
 resource "aws_vpc_endpoint" "cloudwatch_logs" {
   vpc_id       = aws_vpc.vpc.id
   service_name = "com.amazonaws.ap-northeast-1.logs"
-  vpc_endpoint_type = "Interface"
-  private_dns_enabled = true
-  subnet_ids = [
-    aws_subnet.private_1a.id,
-    aws_subnet.private_1c.id
-   ]
-  security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
-}
-
-resource "aws_vpc_endpoint" "secretsmanager" {
-  vpc_id       = aws_vpc.vpc.id
-  service_name = "com.amazonaws.ap-northeast-1.secretsmanager"
-  vpc_endpoint_type = "Interface"
-  private_dns_enabled = true
-  subnet_ids = [
-    aws_subnet.private_1a.id,
-    aws_subnet.private_1c.id
-   ]
-  security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
-}
-
-resource "aws_vpc_endpoint" "ssmmessages" {
-  vpc_id       = aws_vpc.vpc.id
-  service_name = "com.amazonaws.ap-northeast-1.ssmmessages"
-  vpc_endpoint_type = "Interface"
-  private_dns_enabled = true
-  subnet_ids = [
-    aws_subnet.private_1a.id,
-    aws_subnet.private_1c.id
-   ]
-  security_group_ids = [ aws_security_group.vpc_endpoint_sg.id ]
-}
-
-resource "aws_vpc_endpoint" "ssm" {
-  vpc_id       = aws_vpc.vpc.id
-  service_name = "com.amazonaws.ap-northeast-1.ssm"
   vpc_endpoint_type = "Interface"
   private_dns_enabled = true
   subnet_ids = [

@@ -14,3 +14,8 @@ resource "aws_instance" "migrate_instance" {
     Name = "${var.service_name}-migrate-instance-${var.env}"
   }
 }
+
+resource "aws_eip" "eip" {
+  instance = aws_instance.migrate_instance.id
+  vpc      = true
+}
