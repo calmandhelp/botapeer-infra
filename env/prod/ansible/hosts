@@ -1,0 +1,2 @@
+[ec2_instances]
+ec2_instance_public_dns_name ansible_ssh_private_key_file=../.key_pair/botapeer-prod-server.id_rsa
