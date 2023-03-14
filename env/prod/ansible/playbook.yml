@@ -1,0 +1,9 @@
+- name: MySQLのインストール
+  hosts: all
+  become: true
+  tasks:
+    - name: Install MySQL
+      yum:
+        state: latest
+        name:
+          - mysql

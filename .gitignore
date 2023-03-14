@@ -33,4 +33,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+**/env/**/hosts
+
 **/.key_pair/**

@@ -1,0 +1,19 @@
+FROM ubuntu:latest
+
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip ssh && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install ansible
+
+COPY ./env/prod/.key_pair/botapeer-prod-server.id_rsa /root/.ssh/botapeer-prod-server.id_rsa
+
+RUN chmod 600 /root/.ssh/botapeer-prod-server.id_rsa
+
+COPY ./env/prod/ansible/hosts /etc/ansible/hosts
+
+COPY ./env/prod/ansible/playbook.yml /ansible/playbook.yml
+
+WORKDIR /ansible
+
+CMD ["ansible-playbook", "playbook.yml"]
