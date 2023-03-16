@@ -41,7 +41,7 @@ module "ecs" {
   private_1a = module.vpc.private_1a
   private_1c = module.vpc.private_1c
   ecs_task_group = module.cloudwatch.ecs_task_group
-  repository_version = "v2"
+  repository_version = "v6"
   account_id = var.account_id
 }
 
@@ -81,6 +81,7 @@ module "alb" {
   public_1a = module.vpc.public_1a
   public_1c = module.vpc.public_1c
   cert = module.acm.cert
+  bucket_alb_log = module.s3.bucket_alb_log
 }
 
 module "cloudwatch" {
@@ -119,4 +120,11 @@ module "rds" {
   db_password = var.db_password
   migrate_sg = module.ec2.migrate_instance
   ecs_instance_sg = module.ecs.ecs_instance_sg
+}
+
+module "s3" {
+  source = "../../modules/s3"
+  env          = var.environment
+  service_name = var.service_name
+  account_id = var.account_id
 }

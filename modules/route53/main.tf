@@ -34,7 +34,7 @@ resource "aws_acm_certificate_validation" "cert" {
 
 resource "aws_route53_record" "ns_record_for_subdomain_api" {
   name    = aws_route53_zone.subdomain_api.name
-  zone_id = data.aws_route53_zone.service_zone.id
+  zone_id = aws_route53_zone.subdomain_api.id
   records = [
     aws_route53_zone.subdomain_api.name_servers[0],
     aws_route53_zone.subdomain_api.name_servers[1],
@@ -47,7 +47,7 @@ resource "aws_route53_record" "ns_record_for_subdomain_api" {
 
 resource "aws_route53_record" "ns_record_for_subdomain_image" {
   name    = aws_route53_zone.subdomain_image.name
-  zone_id = data.aws_route53_zone.service_zone.id
+  zone_id = aws_route53_zone.subdomain_image.id
   records = [
     aws_route53_zone.subdomain_image.name_servers[0],
     aws_route53_zone.subdomain_image.name_servers[1],
@@ -58,9 +58,25 @@ resource "aws_route53_record" "ns_record_for_subdomain_image" {
   type = "NS"
 }
 
+resource "aws_route53_record" "ns_record_for_subdomain_api_parent" {
+  name    = aws_route53_zone.subdomain_api.name
+  zone_id = data.aws_route53_zone.service_zone.zone_id
+  records = aws_route53_zone.subdomain_api.name_servers
+  ttl     = 300
+  type    = "NS"
+}
+
+resource "aws_route53_record" "ns_record_for_subdomain_image_parent" {
+  name    = aws_route53_zone.subdomain_image.name
+  zone_id = data.aws_route53_zone.service_zone.zone_id
+  records = aws_route53_zone.subdomain_image.name_servers
+  ttl     = 300
+  type    = "NS"
+}
+
 resource "aws_route53_record" "alb_record" {
   name    = aws_route53_zone.subdomain_api.name
-  zone_id = data.aws_route53_zone.service_zone.id
+  zone_id = aws_route53_zone.subdomain_api.id
   type    = "A"
  
   alias {

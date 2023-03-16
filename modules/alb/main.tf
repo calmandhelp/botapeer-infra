@@ -8,6 +8,7 @@ resource "aws_lb_target_group" "alb_group" {
   health_check {
     path     = "/api/users"
     protocol = "HTTP"
+    matcher = "200,404"
   }
 
   tags = {
@@ -21,6 +22,11 @@ resource "aws_lb" "alb" {
 
   security_groups = ["${aws_security_group.ecs_alb_sg.id}"]
   subnets         = ["${var.public_1a.id}", "${var.public_1c.id}"]
+
+  access_logs {
+    bucket  = var.bucket_alb_log.id
+    enabled = true
+  }
 
   tags = {
     Environment = "${var.service_name}-alb-${var.env}"
