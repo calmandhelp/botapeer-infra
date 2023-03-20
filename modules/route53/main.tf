@@ -85,3 +85,15 @@ resource "aws_route53_record" "alb_record" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "image_record" {
+  name    = aws_route53_zone.subdomain_image.name
+  zone_id = aws_route53_zone.subdomain_image.id
+  type    = "A"
+ 
+  alias {
+    name                   = var.bucket_image_s3.website_domain
+    zone_id                = var.bucket_image_s3.hosted_zone_id
+    evaluate_target_health = true
+  }
+}

@@ -1,8 +1,3 @@
-resource "aws_apprunner_connection" "apprunner_connection" {
-  connection_name = "${var.service_name}-apprunner-${var.env}"
-  provider_type   = "GITHUB"
-}
-
 resource "aws_apprunner_auto_scaling_configuration_version" "apprunner_auto_scaling_conf" {
   auto_scaling_configuration_name = "${var.service_name}-auto-scaling-conf-${var.env}"
 
@@ -21,24 +16,15 @@ resource "aws_apprunner_service" "apprunner_service" {
 
   source_configuration {
     authentication_configuration {
-      connection_arn = aws_apprunner_connection.apprunner_connection.arn
+      access_role_arn = var.apprunner_role.arn
     }
     auto_deployments_enabled = false
-    code_repository {
-      code_configuration {
-        code_configuration_values {
-          build_command = "npm install --legacy-peer-deps && npm run build"
-          port = "3000"
-          runtime = "NODEJS_16"
-          start_command = "npm run start"
-        }
-        configuration_source = "API"
+    image_repository {
+      image_configuration {
+        port = "3000"
       }
-      repository_url = "https://github.com/calmandhelp/botapeer-front"
-      source_code_version {
-        type  = "BRANCH"
-        value = var.branch
-      }
+      image_identifier      = "${var.ecr.repository_url}:${var.repository_version}"
+      image_repository_type = "ECR"
     }
   }
 
