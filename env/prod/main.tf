@@ -20,6 +20,7 @@ module "vpc" {
 module "iam" {
   source       = "../../modules/iam"
   account_id = var.account_id
+  image_s3 = module.s3.bucket_image_s3
 }
 
 module "ec2" {
@@ -36,12 +37,12 @@ module "ecs" {
   service_name = var.service_name
   vpc_main     = module.vpc.vpc
   alb_group = module.alb.alb_group
-  ecr = module.ecr.ecr
+  ecr = module.ecr.service_ecr
   execution_role = module.iam.execution_role
   private_1a = module.vpc.private_1a
   private_1c = module.vpc.private_1c
   ecs_task_group = module.cloudwatch.ecs_task_group
-  repository_version = "v6"
+  repository_version = "v10"
   account_id = var.account_id
 }
 
@@ -51,6 +52,7 @@ module "route53" {
   service_name = var.service_name
   cert = module.acm.cert
   alb = module.alb.alb
+  bucket_image_s3 = module.s3.bucket_image_s3
 }
 
 module "acm" {
@@ -71,6 +73,9 @@ module "apprunner" {
   service_name = var.service_name
   branch = "main"
   domain_name = "botapeer.com"
+  ecr = module.ecr.front_ecr
+  repository_version = "v6"
+  apprunner_role = module.iam.apprunner_role
 }
 
 module "alb" {
