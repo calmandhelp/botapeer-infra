@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "api_cluster" {
   name = "${var.service_name}-api-cluster-${var.env}"
-  # setting {
-  #   name  = "containerInsights"
-  #   value = "enabled"
-  # }
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_ecs_cluster_capacity_providers" "api_cluster_provider" {

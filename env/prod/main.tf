@@ -4,6 +4,13 @@ provider "aws" {
   secret_key = var.secret_key
 }
 
+provider "aws" {
+  region     = "us-east-1"
+  access_key = var.access_key
+  secret_key = var.secret_key
+  alias = "virginia"
+}
+
 module "vpc" {
   source        = "../../modules/vpc"
   cidr_vpc      = "10.0.0.0/16"
@@ -61,6 +68,15 @@ module "acm" {
   service_name = var.service_name
 }
 
+module "acm_virginia" {
+  providers = {
+    aws = aws.virginia
+  }  
+  source       = "../../modules/acm_virginia"
+  env          = var.environment
+  service_name = var.service_name
+}
+
 module "ecr" {
   source       = "../../modules/ecr"
   env          = var.environment
@@ -72,7 +88,7 @@ module "apprunner" {
   env          = var.environment
   service_name = var.service_name
   branch = "main"
-  domain_name = "botapeer.com"
+  domain_name = var.domain_name
   ecr = module.ecr.front_ecr
   repository_version = "v6"
   apprunner_role = module.iam.apprunner_role
@@ -132,4 +148,14 @@ module "s3" {
   env          = var.environment
   service_name = var.service_name
   account_id = var.account_id
+}
+
+module "cloudfront" {
+  source = "../../modules/cloudfront"
+  env          = var.environment
+  service_name = var.service_name
+  domain_name = var.domain_name
+  cert = module.acm_virginia.cert
+  bucket_cloudfront = module.s3.bucket_cloudfront
+  apprunner_service = module.apprunner.apprunner_service
 }

@@ -1,13 +1,13 @@
 resource "aws_s3_bucket" "bucket_alb_log" {
-  bucket  = "${var.service_name}-alb-logs-${var.env}"
+  bucket  = "${var.service_name}-alb-log-${var.env}"
 }
 
 data "aws_iam_policy_document" "policy_document_alb_log" {
   statement {
     effect = "Allow"
     principals {
-      type        = "Service"
-      identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::582318560864:root"]
     }
     actions   = ["s3:PutObject"]
     resources = ["arn:aws:s3:::${aws_s3_bucket.bucket_alb_log.bucket}/*"]
@@ -44,18 +44,6 @@ resource "aws_s3_bucket_policy" "bucket_policy_alb_log" {
   policy = data.aws_iam_policy_document.policy_document_alb_log.json
 }
 
-data "aws_iam_policy_document" "policy_document_service_image" {
-  statement {
-    effect = "Allow"
-    principals {
-      type        = "Service"
-      identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
-    }
-    actions   = ["s3:PutObject"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.bucket_alb_log.bucket}/*"]
-  }
-}
-
 resource "aws_s3_bucket_policy" "bucket_policy_image" {
   bucket = aws_s3_bucket.bucket_service_image.id
 
@@ -88,3 +76,25 @@ resource "aws_s3_bucket_website_configuration" "bucket_service_image_config" {
   }
 }
 
+resource "aws_s3_bucket" "bucket_cloudfront" {
+  bucket  = "${var.service_name}-cloudfront-${var.env}"
+}
+
+data "aws_iam_policy_document" "policy_document_cloudfront_log" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+    actions   = ["s3:GetBucketAcl",
+                "s3:PutBucketAcl"
+                ]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.bucket_cloudfront.bucket}"]
+  }
+}
+
+resource "aws_s3_bucket_policy" "bucket_policy_cloudfront_log" {
+  bucket = aws_s3_bucket.bucket_cloudfront.id
+  policy = data.aws_iam_policy_document.policy_document_cloudfront_log.json
+}

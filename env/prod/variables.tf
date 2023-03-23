@@ -51,3 +51,7 @@ variable "jwt_secret" {
 variable "jwt_expiration" {
   description = "認証基盤のトークンの有効期限"
 }
+variable "domain_name" {
+  default = "botapeer.com"
+  description = "domain名"
+}
